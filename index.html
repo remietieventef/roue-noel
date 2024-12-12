@@ -29,7 +29,7 @@
             align-items: center;
         }
         .wheel {
-            flex: 0 0 33%;
+            flex: 0 0 33%; /* Chaque roue prend un tiers de l'espace */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -135,6 +135,7 @@
     <div id="videoContainer">
         <iframe id="backgroundVideo" src="https://www.youtube.com/embed/videoseries?list=PLiVDPajlpFZUc05R7sdyKSLjNznlP4hIT&autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen; accelerometer; picture-in-picture" allowfullscreen></iframe>
     </div>
+
     <div class="container">
         <button id="customizeButton" class="top-right">Personnaliser</button>
         <div class="wheels-container">
@@ -151,10 +152,11 @@
             <div class="wheel">
                 <canvas id="wheelCanvas3" width="300" height="300"></canvas>
                 <div id="result3" class="result">Résultat: ?</div>
-                <button id="spinButton3">Tourner</button>
+                <button id="spinButton3">Tourner</button
             </div>
         </div>
     </div>
+
     <div id="popup" class="popup">
         <div class="popup-content">
             <h2>Entrez le mot de passe pour accéder à la personnalisation</h2>
@@ -164,80 +166,44 @@
             </div>
         </div>
     </div>
+
     <div id="popupContent" class="popup">
         <div class="popup-content">
             <h2>Personnalisez les cadeaux</h2>
             <div class="popup-section">
                 <div class="wheel-settings">
-                    <h3>Roue 3</h3>
-                    <label for="gift1_1">Cadeau 1 :</label><input type="text" id="gift1_1" value="Cadeau 🎁"><br>
-                    <label for="gift2_1">Cadeau 2 :</label><input type="text" id="gift2_1" value="Cadeau 🎁"><br>
-                    <label for="gift3_1">Cadeau 3 :</label><input type="text" id="gift3_1" value="Cadeau 🎁"><br>
-                    <label for="gift4_1">Cadeau 4 :</label><input type="text" id="gift4_1" value="Cadeau 🎁"><br>
-                    <label for="gift5_1">Cadeau 5 :</label><input type="text" id="gift5_1" value="Cadeau 🎁"><br>
-                    <label for="gift6_1">Cadeau 6 :</label><input type="text" id="gift6_1" value="Cadeau 🎁"><br>
-                    <label for="gift7_1">Cadeau 7 :</label><input type="text" id="gift7_1" value="Cadeau 🎁"><br>
-                    <label for="gift8_1">Cadeau 8 :</label><input type="text" id="gift8_1" value="Cadeau 🎁"><br>
-                    <label for="gift9_1">Cadeau 9 :</label><input type="text" id="gift9_1" value="Cadeau 🎁"><br>
-                    <label for="gift10_1">Cadeau 10 :</label><input type="text" id="gift10_1" value="Cadeau 🎁"><br>
-                    <label for="gift11_1">Cadeau 11 :</label><input type="text" id="gift11_1" value="Cadeau 🎁"><br>
-                    <label for="gift12_1">Cadeau 12 :</label><input type="text" id="gift12_1" value="Cadeau 🎁"><br>
+                    <h3>Roue 1</h3>
+                    <!-- Champs pour les cadeaux 1 à 12 pour Roue 1 -->
                 </div>
                 <div class="wheel-settings">
                     <h3>Roue 2</h3>
-                    <label for="gift1_2">Cadeau 1 :</label><input type="text" id="gift1_2" value="Cadeau 🎁"><br>
-                    <label for="gift2_2">Cadeau 2 :</label><input type="text" id="gift2_2" value="Cadeau 🎁"><br>
-                    <label for="gift3_2">Cadeau 3 :</label><input type="text" id="gift3_2" value="Cadeau 🎁"><br>
-                    <label for="gift4_2">Cadeau 4 :</label><input type="text" id="gift4_2" value="Cadeau 🎁"><br>
-                    <label for="gift5_2">Cadeau 5 :</label><input type="text" id="gift5_2" value="Cadeau 🎁"><br>
-                    <label for="gift6_2">Cadeau 6 :</label><input type="text" id="gift6_2" value="Cadeau 🎁"><br>
-                    <label for="gift7_2">Cadeau 7 :</label><input type="text" id="gift7_2" value="Cadeau 🎁"><br>
-                    <label for="gift8_2">Cadeau 8 :</label><input type="text" id="gift8_2" value="Cadeau 🎁"><br>
-                    <label for="gift9_2">Cadeau 9 :</label><input type="text" id="gift9_2" value="Cadeau 🎁"><br>
-                    <label for="gift10_2">Cadeau 10 :</label><input type="text" id="gift10_2" value="Cadeau 🎁"><br>
-                    <label for="gift11_2">Cadeau 11 :</label><input type="text" id="gift11_2" value="Cadeau 🎁"><br>
-                    <label for="gift12_2">Cadeau 12 :</label><input type="text" id="gift12_2" value="Cadeau 🎁"><br>
+                    <!-- Champs pour les cadeaux 1 à 12 pour Roue 2 -->
                 </div>
-            </div>
-            <div class="popup-section">
                 <div class="wheel-settings">
-                    <h3>Roue 1</h3>
-                    <label for="gift1_3">Cadeau 1 :</label><input type="text" id="gift1_3" value="Cadeau 🎁"><br>
-                    <label for="gift2_3">Cadeau 2 :</label><input type="text" id="gift2_3" value="Cadeau 🎁"><br>
-                    <label for="gift3_3">Cadeau 3 :</label><input type of="text" id="gift3_3" value="Cadeau 🎁"><br>
-                    <label for="gift4_3">Cadeau 4 :</label><input type="text" id="gift4_3" value="Cadeau 🎁"><br>
-                    <label for="gift5_3">Cadeau 5 :</label><input type="text" id="gift5_3" value="Cadeau 🎁"><br>
-                    <label for="gift6_3">Cadeau 6 :</label><input type="text" id="gift6_3" value="Cadeau 🎁"><br>
-                    <label for="gift7_3">Cadeau 7 :</label><input type="text" id="gift7_3" value="Cadeau 🎁"><br>
-                    <label for="gift8_3">Cadeau 8 :</label><input type="text" id="gift8_3" value="Cadeau 🎁"><br>
-                    <label for="gift9_3">Cadeau 9 :</label><input type="text" id="gift9_3" value="Cadeau 🎁"><br>
-                    <label for="gift10_3">Cadeau 10 :</label><input type="text" id="gift10_3" value="Cadeau 🎁"><br>
-                    <label for="gift11_3">Cadeau 11 :</label><input type="text" id="gift11_3" value="Cadeau 🎁"><br>
-                    <label for="gift12_3">Cadeau 12 :</label><input type="text" id="gift12_3" value="Cadeau 🎁"><br>
+                    <h3>Roue 3</h3>
+                    <!-- Champs pour les cadeaux 1 à 12 pour Roue 3 -->
                 </div>
             </div>
             <button id="saveButton">Sauvegarder</button>
         </div>
     </div>
-</div>
 
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
         emailjs.init("hoz22gRCGAh20qkjt");
-        let lastMouseMoveTime = Date.now();
         const wheels = [
             { canvasId: "wheelCanvas1", spinButtonId: "spinButton1", resultId: "result1", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Anaïs.png' },
             { canvasId: "wheelCanvas2", spinButtonId: "spinButton2", resultId: "result2", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Hugo.png' },
             { canvasId: "wheelCanvas3", spinButtonId: "spinButton3", resultId: "result3", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Adeline.png' }
         ];
 
+        // Charge et dessine les roues avec les images au centre
         function drawWheel(canvasId, colors, gifts, imageSrc) {
             const canvas = document.getElementById(canvasId);
             const ctx = canvas.getContext("2d");
             const segments = gifts.length;
             const arc = (2 * Math.PI) / segments;
-
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             gifts.forEach((gift, i) => {
                 const angle = i * arc;
                 ctx.beginPath();
@@ -245,7 +211,6 @@
                 ctx.moveTo(150, 150);
                 ctx.arc(150, 150, 150, angle, angle + arc);
                 ctx.fill();
-
                 ctx.save();
                 ctx.translate(150, 150);
                 ctx.rotate(angle + arc / 2);
@@ -255,39 +220,36 @@
                 ctx.fillText(gift, 100, 10);
                 ctx.restore();
             });
-
             ctx.beginPath();
             ctx.arc(150, 150, 30, 0, 2 * Math.PI);
             ctx.fillStyle = "#ffffff";
             ctx.fill();
-
-            // Dessiner l'image au centre
             const image = new Image();
             image.onload = () => {
-                ctx.drawImage(image, 115, 115, 70, 70);  // Ajuster si nécessaire
+                ctx.drawImage(image, 115, 115, 70, 70);
             };
             image.src = imageSrc;
         }
 
+        // Fonction pour faire tourner la roue
         function spinWheel(wheel) {
             const canvas = document.getElementById(wheel.canvasId);
             const ctx = canvas.getContext("2d");
+            const gifts = wheel.gifts;
             let angle = 0;
-            const spinTime = 5000;  // Temps de rotation plus long
+            const spinTime = Math.random() * 3000 + 2000;
             const spinInterval = 20;
-
             const interval = setInterval(() => {
-                angle += (20 * Math.PI / 180) * 0.5;  // Vitesse réduite
-                drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts, wheel.imageSrc);
+                angle += 20 * Math.PI / 180 * 0.5;  // Réduction de la vitesse de rotation
+                drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], gifts, wheel.imageSrc);
                 ctx.translate(150, 150);
                 ctx.rotate(angle);
                 ctx.translate(-150, -150);
             }, spinInterval);
-
             setTimeout(() => {
                 clearInterval(interval);
-                const resultIndex = Math.floor(Math.random() * wheel.gifts.length);
-                document.getElementById(wheel.resultId).textContent = `Résultat: ${wheel.gifts[resultIndex]}`;
+                const resultIndex = Math.floor(Math.random() * gifts.length);
+                document.getElementById(wheel.resultId).textContent = `Résultat: ${gifts[resultIndex]}`;
             }, spinTime);
         }
 
