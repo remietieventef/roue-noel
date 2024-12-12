@@ -254,91 +254,84 @@
 
 
         // Fonction pour dessiner la roue
-        function drawWheel(canvasId, colors, gifts) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext("2d");
-            const segments = gifts.length;
-            const arc = (2 * Math.PI) / segments;
+        function drawWheel(canvasId, colors, gifts, imageSrc) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const segments = gifts.length;
+    const arc = (2 * Math.PI) / segments;
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear the canvas each time we draw
 
-            gifts.forEach((gift, i) => {
-                const angle = i * arc;
-                ctx.beginPath();
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.moveTo(150, 150);
-                ctx.arc(150, 150, 150, angle, angle + arc);
-                ctx.fill();
+    gifts.forEach((gift, i) => {
+        const angle = i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(150, 150);
+        ctx.arc(150, 150, 150, angle, angle + arc);
+        ctx.fill();
 
-                ctx.save();
-                ctx.translate(150, 150);
-                ctx.rotate(angle + arc / 2);
-                ctx.fillStyle = "black";
-                ctx.textAlign = "center";
-                ctx.font = "14px Arial";
-                ctx.fillText(gift, 100, 10);
-                ctx.restore();
-            });
+        ctx.save();
+        ctx.translate(150, 150);
+        ctx.rotate(angle + arc / 2);
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.font = "14px Arial";
+        ctx.fillText(gift, 100, 10);
+        ctx.restore();
+    });
 
-            ctx.beginPath();
-            ctx.arc(150, 150, 30, 0, 2 * Math.PI);
-            ctx.fillStyle = "#ffffff";
-            ctx.fill();
-        }
+    ctx.beginPath();
+    ctx.arc(150, 150, 30, 0, 2 * Math.PI);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
 
-        // Fonction pour faire tourner la roue
-        function spinWheel(wheel) {
-            const canvas = document.getElementById(wheel.canvasId);
-            const ctx = canvas.getContext("2d");
-            const gifts = wheel.gifts;
-            let angle = 0;
-            const spinTime = Math.random() * 3000 + 2000;
-            const spinInterval = 20;
+    // Load and draw the image in the center
+    const image = new Image();
+    image.onload = () => {
+        ctx.drawImage(image, 115, 115, 70, 70);  // Draw the image at the center
+    };
+    image.src = imageSrc;
+}
 
-          const interval = setInterval(() => {
-    angle += 20 * Math.PI / 180 * 0.6; // Réduit la vitesse de rotation de 40%
-    drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], gifts);
-    ctx.translate(150, 150);
-    ctx.rotate(angle);
-    ctx.translate(-150, -150);
-}, spinInterval);
+// Update the spinWheel function to pass image source
+function spinWheel(wheel, imageSrc) {
+    const canvas = document.getElementById(wheel.canvasId);
+    const ctx = canvas.getContext('2d');
+    const gifts = wheel.gifts;
+    let angle = 0;
+    const spinTime = Math.random() * 3000 + 2000;
+    const spinInterval = 20;
 
-            setTimeout(() => {
-                clearInterval(interval);
-                const resultIndex = Math.floor(Math.random() * gifts.length);
-                document.getElementById(wheel.resultId).textContent = `Résultat: ${gifts[resultIndex]}`;
-                // Envoi de l'e-mail avec le score
-                sendEmail(gifts[resultIndex]);
-            }, spinTime);
-        }
+    const interval = setInterval(() => {
+        angle += 20 * Math.PI / 180 * 0.6;  // Slow rotation speed
+        drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], gifts, imageSrc);
+        ctx.translate(150, 150);
+        ctx.rotate(angle);
+        ctx.translate(-150, -150);
+    }, spinInterval);
 
-        // Événements pour les boutons
-        document.getElementById("customizeButton").addEventListener("click", () => {
-            document.getElementById("popup").style.display = "flex";
-        });
+    setTimeout(() => {
+        clearInterval(interval);
+        const resultIndex = Math.floor(Math.random() * gifts.length);
+        document.getElementById(wheel.resultId).textContent = `Résultat: ${gifts[resultIndex]}`;
+        // Optionally send an email with the result
+        // sendEmail(gifts[resultIndex]);
+    }, spinTime);
+}
 
-        document.getElementById("accessButton").addEventListener("click", () => {
-            const password = document.getElementById("passwordInput").value;
-            if (password === "weareeffrance") {
-                document.getElementById("popup").style.display = "none";
-                document.getElementById("popupContent").style.display = "flex";
-            } else {
-                alert("Mot de passe incorrect !");
-            }
-        });
+// Attach wheel spinning and image drawing when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const wheels = [
+        { canvasId: "wheelCanvas1", spinButtonId: "spinButton1", resultId: "result1", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Anais.png' },
+        { canvasId: "wheelCanvas2", spinButtonId: "spinButton2", resultId: "result2", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Hugo.png' },
+        { canvasId: "wheelCanvas3", spinButtonId: "spinButton3", resultId: "result3", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Adeline.png' }
+    ];
 
-        document.getElementById("saveButton").addEventListener("click", () => {
-            wheels.forEach((wheel, index) => {
-                wheel.gifts = Array.from({ length: 12 }, (_, i) => document.getElementById(`gift${i + 1}_${index + 1}`).value);
-                drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts);
-            });
-            document.getElementById("popupContent").style.display = "none";
-        });
-
-        wheels.forEach(wheel => {
-            drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts);
-            document.getElementById(wheel.spinButtonId).addEventListener("click", () => spinWheel(wheel));
-        });
+    wheels.forEach(wheel => {
+        drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts, wheel.imageSrc);
+        document.getElementById(wheel.spinButtonId).addEventListener('click', () => spinWheel(wheel, wheel.imageSrc));
+    });
+});
         function loadAndDrawImages() {
     const wheelImages = [
         { canvasId: 'wheelCanvas1', src: 'Anais.png' },
