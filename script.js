@@ -15,7 +15,7 @@ const result2 = document.getElementById("result2");
 const result3 = document.getElementById("result3");
 
 // Variables modifiées
-let gifts1 = ["Cadeau 1", "Cadeau 2", "Cadeau 3", "Cadeau 4", "Cadeau 5", "Cadeau 6", "Cadeau 7", "Cadeau 8", "Cadeau 9", "Cadeau 10", "Cadeau 11", "Cadeau 12"];
+let gifts1 = ["Cadeau a", "Cadeau 2", "Cadeau 3", "Cadeau 4", "Cadeau 5", "Cadeau 6", "Cadeau 7", "Cadeau 8", "Cadeau 9", "Cadeau 10", "Cadeau 11", "Cadeau 12"];
 let gifts2 = ["Cadeau 1", "Cadeau 2", "Cadeau 3", "Cadeau 4", "Cadeau 5", "Cadeau 6", "Cadeau 7", "Cadeau 8", "Cadeau 9", "Cadeau 10", "Cadeau 11", "Cadeau 12"];
 let gifts3 = ["Cadeau 1", "Cadeau 2", "Cadeau 3", "Cadeau 4", "Cadeau 5", "Cadeau 6", "Cadeau 7", "Cadeau 8", "Cadeau 9", "Cadeau 10", "Cadeau 11", "Cadeau 12"];
 
