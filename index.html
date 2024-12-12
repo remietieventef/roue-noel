@@ -4,207 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roues de Noël</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: url('RoueNoel.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            text-align: center;
-        }
-
-        .wheel-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-            gap: 20px;
-        }
-
-        .wheel {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            border: 5px solid white;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .wheel canvas {
-            width: 100%;
-            height: 100%;
-        }
-
-        .button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: red;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: white;
-            font-size: 16px;
-        }
-
-        .result {
-            margin-top: 10px;
-            padding: 10px;
-            border: 2px solid white;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        #edit-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 15px;
-            background-color: gold;
-            color: black;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        #popup textarea {
-            width: 100%;
-            height: 50px;
-            margin-bottom: 10px;
-        }
-
-        #overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="edit-button">Editer les Roues</button>
-
-    <div class="wheel-container">
-        <div class="wheel" id="wheel1">
-            <canvas></canvas>
+    <div class="background">
+        <button id="editButton">Personnaliser les Cadeaux</button>
+        <div class="wheels">
+            <div class="wheel" id="wheel1">
+                <canvas id="canvas1"></canvas>
+                <button onclick="spinWheel(1)">Lancer</button>
+                <div id="result1" class="result">Résultat: </div>
+            </div>
+            <div class="wheel" id="wheel2">
+                <canvas id="canvas2"></canvas>
+                <button onclick="spinWheel(2)">Lancer</button>
+                <div id="result2" class="result">Résultat: </div>
+            </div>
+            <div class="wheel" id="wheel3">
+                <canvas id="canvas3"></canvas>
+                <button onclick="spinWheel(3)">Lancer</button>
+                <div id="result3" class="result">Résultat: </div>
+            </div>
         </div>
-        <button class="button" onclick="spin(1)">Lancer</button>
-        <div class="result" id="result1">Résultat: </div>
-
-        <div class="wheel" id="wheel2">
-            <canvas></canvas>
-        </div>
-        <button class="button" onclick="spin(2)">Lancer</button>
-        <div class="result" id="result2">Résultat: </div>
-
-        <div class="wheel" id="wheel3">
-            <canvas></canvas>
-        </div>
-        <button class="button" onclick="spin(3)">Lancer</button>
-        <div class="result" id="result3">Résultat: </div>
+    </div>
+    <div id="popup" class="popup">
+        <form id="editForm">
+            <label for="wheelSelect">Choisir la roue:</label>
+            <select id="wheelSelect">
+                <option value="1">Roue 1</option>
+                <option value="2">Roue 2</option>
+                <option value="3">Roue 3</option>
+            </select>
+            <label for="gifts">Cadeaux (séparés par des virgules):</label>
+            <textarea id="gifts"></textarea>
+            <button type="submit">Sauvegarder</button>
+        </form>
     </div>
 
-    <div id="popup">
-        <h3>Modifier les cadeaux</h3>
-        <textarea id="wheel1-text">Cadeau1, Cadeau2, ...</textarea>
-        <textarea id="wheel2-text">Cadeau1, Cadeau2, ...</textarea>
-        <textarea id="wheel3-text">Cadeau1, Cadeau2, ...</textarea>
-        <button class="button" onclick="saveEdits()">Save</button>
-    </div>
-    <div id="overlay" onclick="closePopup()"></div>
-
-    <script>
-        const wheelData = [
-            Array(12).fill("Cadeau"),
-            Array(12).fill("Cadeau"),
-            Array(12).fill("Cadeau")
-        ];
-
-        function drawWheel(canvas, data) {
-            const ctx = canvas.getContext("2d");
-            const radius = canvas.width / 2;
-            const anglePerSegment = (2 * Math.PI) / data.length;
-
-            data.forEach((text, index) => {
-                const startAngle = anglePerSegment * index;
-                const endAngle = anglePerSegment * (index + 1);
-                ctx.beginPath();
-                ctx.moveTo(radius, radius);
-                ctx.arc(radius, radius, radius, startAngle, endAngle);
-                ctx.fillStyle = index % 2 === 0 ? "#FF0000" : "#00FF00";
-                ctx.fill();
-                ctx.stroke();
-                
-                ctx.save();
-                ctx.translate(radius, radius);
-                ctx.rotate(startAngle + anglePerSegment / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "white";
-                ctx.fillText(text, radius - 10, 0);
-                ctx.restore();
-            });
-        }
-
-        function spin(wheelIndex) {
-            const resultDiv = document.getElementById(`result${wheelIndex}`);
-            const segments = wheelData[wheelIndex - 1];
-            const result = segments[Math.floor(Math.random() * segments.length)];
-            resultDiv.textContent = `Résultat: ${result}`;
-        }
-
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
-
-        function saveEdits() {
-            const texts = [
-                document.getElementById("wheel1-text").value.split(","),
-                document.getElementById("wheel2-text").value.split(","),
-                document.getElementById("wheel3-text").value.split(",")
-            ];
-
-            texts.forEach((textArray, index) => {
-                wheelData[index] = textArray;
-                const canvas = document.getElementById(`wheel${index + 1}`).querySelector("canvas");
-                drawWheel(canvas, textArray);
-            });
-
-            closePopup();
-        }
-
-        document.getElementById("edit-button").addEventListener("click", openPopup);
-
-        document.querySelectorAll(".wheel canvas").forEach((canvas, index) => {
-            canvas.width = 200;
-            canvas.height = 200;
-            drawWheel(canvas, wheelData[index]);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
