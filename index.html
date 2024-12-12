@@ -339,6 +339,28 @@
             drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts);
             document.getElementById(wheel.spinButtonId).addEventListener("click", () => spinWheel(wheel));
         });
+        function loadAndDrawImages() {
+    const wheelImages = [
+        { canvasId: 'wheelCanvas1', src: 'Anais.png' },
+        { canvasId: 'wheelCanvas2', src: 'Hugo.png' },
+        { canvasId: 'wheelCanvas3', src: 'Adeline.png' }
+    ];
+
+    wheelImages.forEach(wheel => {
+        const canvas = document.getElementById(wheel.canvasId);
+        const ctx = canvas.getContext('2d');
+        const image = new Image();
+        image.onload = () => {
+            // Assurez-vous que les roues sont déjà dessinées avant de dessiner les images
+            ctx.drawImage(image, 115, 115, 70, 70); // Dessine l'image au centre du cercle
+        };
+        image.src = wheel.src; // Définir le chemin de l'image
+    });
+}
+
+// Chargez et dessinez les images après que le contenu du DOM soit complètement chargé
+document.addEventListener('DOMContentLoaded', loadAndDrawImages);
+
     </script>
 </body>
 </html>
