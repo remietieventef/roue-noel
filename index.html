@@ -13,7 +13,6 @@
             background-size: cover;
             overflow: hidden;
         }
-
         .container {
             text-align: center;
             position: relative;
@@ -24,13 +23,11 @@
             align-items: center;
             height: 100vh;
         }
-
         .wheels-container {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
         .wheel {
             flex: 0 0 33%; /* Chaque roue prend un tiers de l'espace */
             display: flex;
@@ -38,12 +35,10 @@
             align-items: center;
             margin: 10px;
         }
-
         canvas {
             border: 2px solid #fff;
             border-radius: 50%;
         }
-
         button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -54,7 +49,6 @@
             background-color: #4CAF50;
             color: white;
         }
-
         .result {
             margin-top: 10px;
             font-size: 18px;
@@ -65,7 +59,6 @@
             background-color: #e8f5e9;
             width: 200px;
         }
-
         .top-right {
             position: absolute;
             top: 20px;
@@ -77,7 +70,6 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
         .popup {
             display: none;
             position: fixed;
@@ -90,24 +82,20 @@
             justify-content: center;
             align-items: center;
         }
-
         .popup-content {
             background: white;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
         }
-
         .popup-section {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
         }
-
         .popup-left, .popup-right {
             width: 45%;
         }
-
         #videoContainer {
             display: none;
             position: fixed;
@@ -118,24 +106,20 @@
             z-index: 1;
             background: black;
         }
-
         #backgroundVideo {
             width: 100%;
             height: 100%;
             border: none;
         }
-
         .password-container {
             margin: 20px 0;
         }
-
         #passwordInput {
             padding: 10px;
             font-size: 16px;
             width: 200px;
             margin-bottom: 20px;
         }
-
         #accessButton {
             padding: 10px 20px;
             background-color: #4CAF50;
@@ -193,7 +177,7 @@
                 <label for="gift2_1">Cadeau 2 :</label><input type="text" id="gift2_1" value="Cadeau  🎁"><br>
                 <label for="gift3_1">Cadeau 3 :</label><input type="text" id="gift3_1" value="Cadeau  🎁"><br>
                 <label for="gift4_1">Cadeau 4 :</label><input type="text" id="gift4_1" value="Cadeau  🎁"><br>
-                <label for="gift5_1">Cadeau 5 :</label><input type="text" id="gift5_1" value="Cadeau  🎁"><br>
+                <label for="gift5_1">Cadeau 5 :</label><input type of text" id="gift5_1" value="Cadeau  🎁"><br>
                 <label for="gift6_1">Cadeau 6 :</label><input type="text" id="gift6_1" value="Cadeau  🎁"><br>
                 <label for="gift7_1">Cadeau 7 :</label><input type="text" id="gift7_1" value="Cadeau  🎁"><br>
                 <label for="gift8_1">Cadeau 8 :</label><input type="text" id="gift8_1" value="Cadeau  🎁"><br>
@@ -201,9 +185,6 @@
                 <label for="gift10_1">Cadeau 10 :</label><input type="text" id="gift10_1" value="Cadeau  🎁"><br>
                 <label for="gift11_1">Cadeau 11 :</label><input type="text" id="gift11_1" value="Cadeau  🎁"><br>
                 <label for="gift12_1">Cadeau 12 :</label><input type="text" id="gift12_1" value="Cadeau  🎁"><br>
-                    <!-- Champs pour les cadeaux 1 à 12 pour Roue 3 -->
-                <!-- Ajout des champs pour Roue 3 ici -->
-                <!-- Utilisation de boucle ou de copie manuelle pour remplir les champs -->
             </div>
             <div class="wheel-settings">
                 <h3>Roue 2</h3>
@@ -247,14 +228,12 @@
         emailjs.init("hoz22gRCGAh20qkjt");
         let lastMouseMoveTime = Date.now();
         const wheels = [
-    { canvasId: "wheelCanvas1", spinButtonId: "spinButton1", resultId: "result1", gifts: Array(12).fill("Cadeau 🎁") },
-    { canvasId: "wheelCanvas2", spinButtonId: "spinButton2", resultId: "result2", gifts: Array(12).fill("Cadeau 🎁") },
-    { canvasId: "wheelCanvas3", spinButtonId: "spinButton3", resultId: "result3", gifts: Array(12).fill("Cadeau 🎁") }
+    { canvasId: "wheelCanvas1", spinButtonId: "spinButton1", resultId: "result1", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Anais.png' },
+    { canvasId: "wheelCanvas2", spinButtonId: "spinButton2", resultId: "result2", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Hugo.png' },
+    { canvasId: "wheelCanvas3", spinButtonId: "spinButton3", resultId: "result3", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Adeline.png' }
 ];
 
-
-        // Fonction pour dessiner la roue
-        function drawWheel(canvasId, colors, gifts, imageSrc) {
+function drawWheel(canvasId, colors, gifts, imageSrc) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     const segments = gifts.length;
@@ -293,7 +272,6 @@
     image.src = imageSrc;
 }
 
-// Update the spinWheel function to pass image source
 function spinWheel(wheel, imageSrc) {
     const canvas = document.getElementById(wheel.canvasId);
     const ctx = canvas.getContext('2d');
@@ -303,7 +281,7 @@ function spinWheel(wheel, imageSrc) {
     const spinInterval = 20;
 
     const interval = setInterval(() => {
-        angle += 20 * Math.PI / 180 * 0.6;  // Slow rotation speed
+        angle += 20 * Math.PI / 180 * 0.4;  // Slow rotation speed
         drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], gifts, imageSrc);
         ctx.translate(150, 150);
         ctx.rotate(angle);
@@ -321,39 +299,15 @@ function spinWheel(wheel, imageSrc) {
 
 // Attach wheel spinning and image drawing when the page loads
 document.addEventListener('DOMContentLoaded', function() {
-    const wheels = [
-        { canvasId: "wheelCanvas1", spinButtonId: "spinButton1", resultId: "result1", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Anais.png' },
-        { canvasId: "wheelCanvas2", spinButtonId: "spinButton2", resultId: "result2", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Hugo.png' },
-        { canvasId: "wheelCanvas3", spinButtonId: "spinButton3", resultId: "result3", gifts: Array(12).fill("Cadeau 🎁"), imageSrc: 'Adeline.png' }
-    ];
-
     wheels.forEach(wheel => {
         drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts, wheel.imageSrc);
         document.getElementById(wheel.spinButtonId).addEventListener('click', () => spinWheel(wheel, wheel.imageSrc));
     });
-});
-        function loadAndDrawImages() {
-    const wheelImages = [
-        { canvasId: 'wheelCanvas1', src: 'Anais.png' },
-        { canvasId: 'wheelCanvas2', src: 'Hugo.png' },
-        { canvasId: 'wheelCanvas3', src: 'Adeline.png' }
-    ];
 
-    wheelImages.forEach(wheel => {
-        const canvas = document.getElementById(wheel.canvasId);
-        const ctx = canvas.getContext('2d');
-        const image = new Image();
-        image.onload = () => {
-            // Assurez-vous que les roues sont déjà dessinées avant de dessiner les images
-            ctx.drawImage(image, 115, 115, 70, 70); // Dessine l'image au centre du cercle
-        };
-        image.src = wheel.src; // Définir le chemin de l'image
+    document.getElementById("customizeButton").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "flex";
     });
-}
-
-// Chargez et dessinez les images après que le contenu du DOM soit complètement chargé
-document.addEventListener('DOMContentLoaded', loadAndDrawImages);
-
+});
     </script>
 </body>
 </html>
