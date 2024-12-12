@@ -3,44 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roues de Noël</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Roue de Noël Personnalisée</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('Roue Noel.jpg') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .wheels-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .wheel {
+            flex: 0 0 33%; /* Chaque roue prend un tiers de l'espace */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+        }
+
+        canvas {
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            background-color: #e8f5e9;
+            width: 200px;
+        }
+
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .popup-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .popup-left, .popup-right {
+            width: 45%;
+        }
+
+        #videoContainer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: black;
+        }
+
+        #backgroundVideo {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .password-container {
+            margin: 20px 0;
+        }
+
+        #passwordInput {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        #accessButton {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="background">
-        <button id="editButton">Personnaliser les Cadeaux</button>
-        <div class="wheels">
-            <div class="wheel" id="wheel1">
-                <canvas id="canvas1"></canvas>
-                <button onclick="spinWheel(1)">Lancer</button>
-                <div id="result1" class="result">Résultat: </div>
+    <div id="videoContainer">
+        <iframe id="backgroundVideo" src="https://www.youtube.com/embed/videoseries?list=PLiVDPajlpFZUc05R7sdyKSLjNznlP4hIT&autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen; accelerometer; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="container">
+        <button id="customizeButton" class="top-right">Personnaliser</button>
+        <div class="wheels-container">
+            <div class="wheel">
+                <canvas id="wheelCanvas1" width="300" height="300"></canvas>
+                <div id="result1" class="result">Résultat: ?</div>
+                <button id="spinButton1">Tourner</button>
             </div>
-            <div class="wheel" id="wheel2">
-                <canvas id="canvas2"></canvas>
-                <button onclick="spinWheel(2)">Lancer</button>
-                <div id="result2" class="result">Résultat: </div>
+            <div class="wheel">
+                <canvas id="wheelCanvas2" width="300" height="300"></canvas>
+                <div id="result2" class="result">Résultat: ?</div>
+                <button id="spinButton2">Tourner</button>
             </div>
-            <div class="wheel" id="wheel3">
-                <canvas id="canvas3"></canvas>
-                <button onclick="spinWheel(3)">Lancer</button>
-                <div id="result3" class="result">Résultat: </div>
+            <div class="wheel">
+                <canvas id="wheelCanvas3" width="300" height="300"></canvas>
+                <div id="result3" class="result">Résultat: ?</div>
+                <button id="spinButton3">Tourner</button>
             </div>
         </div>
     </div>
+
     <div id="popup" class="popup">
-        <form id="editForm">
-            <label for="wheelSelect">Choisir la roue:</label>
-            <select id="wheelSelect">
-                <option value="1">Roue 1</option>
-                <option value="2">Roue 2</option>
-                <option value="3">Roue 3</option>
-            </select>
-            <label for="gifts">Cadeaux (séparés par des virgules):</label>
-            <textarea id="gifts"></textarea>
-            <button type="submit">Sauvegarder</button>
-        </form>
+        <div class="popup-content">
+            <h2>Entrez le mot de passe pour accéder à la personnalisation</h2>
+            <div class="password-container">
+                <input type="password" id="passwordInput" placeholder="Mot de passe">
+                <button id="accessButton">Accéder</button>
+            </div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+<div id="popupContent" class="popup">
+    <div class="popup-content">
+        <h2>Personnalisez les cadeaux</h2>
+        <div class="popup-section">
+            <div class="wheel-settings">
+                <h3>Roue 3</h3>
+                <label for="gift1_1">Cadeau 1 :</label><input type="text" id="gift1_1" value="Cadeau  🎁"><br>
+                <label for="gift2_1">Cadeau 2 :</label><input type="text" id="gift2_1" value="Cadeau  🎁"><br>
+                <label for="gift3_1">Cadeau 3 :</label><input type="text" id="gift3_1" value="Cadeau  🎁"><br>
+                <label for="gift4_1">Cadeau 4 :</label><input type="text" id="gift4_1" value="Cadeau  🎁"><br>
+                <label for="gift5_1">Cadeau 5 :</label><input type="text" id="gift5_1" value="Cadeau  🎁"><br>
+                <label for="gift6_1">Cadeau 6 :</label><input type="text" id="gift6_1" value="Cadeau  🎁"><br>
+                <label for="gift7_1">Cadeau 7 :</label><input type="text" id="gift7_1" value="Cadeau  🎁"><br>
+                <label for="gift8_1">Cadeau 8 :</label><input type="text" id="gift8_1" value="Cadeau  🎁"><br>
+                <label for="gift9_1">Cadeau 9 :</label><input type="text" id="gift9_1" value="Cadeau  🎁"><br>
+                <label for="gift10_1">Cadeau 10 :</label><input type="text" id="gift10_1" value="Cadeau  🎁"><br>
+                <label for="gift11_1">Cadeau 11 :</label><input type="text" id="gift11_1" value="Cadeau  🎁"><br>
+                <label for="gift12_1">Cadeau 12 :</label><input type="text" id="gift12_1" value="Cadeau  🎁"><br>
+                    <!-- Champs pour les cadeaux 1 à 12 pour Roue 3 -->
+                <!-- Ajout des champs pour Roue 3 ici -->
+                <!-- Utilisation de boucle ou de copie manuelle pour remplir les champs -->
+            </div>
+            <div class="wheel-settings">
+                <h3>Roue 2</h3>
+                <label for="gift1_2">Cadeau 1 :</label><input type="text" id="gift1_2" value="Cadeau  🎁"><br>
+                <label for="gift2_2">Cadeau 2 :</label><input type="text" id="gift2_2" value="Cadeau  🎁"><br>
+                <label for="gift3_2">Cadeau 3 :</label><input type="text" id="gift3_2" value="Cadeau  🎁"><br>
+                <label for="gift4_2">Cadeau 4 :</label><input type="text" id="gift4_2" value="Cadeau  🎁"><br>
+                <label for="gift5_2">Cadeau 5 :</label><input type="text" id="gift5_2" value="Cadeau  🎁"><br>
+                <label for="gift6_2">Cadeau 6 :</label><input type="text" id="gift6_2" value="Cadeau  🎁"><br>
+                <label for="gift7_2">Cadeau 7 :</label><input type="text" id="gift7_2" value="Cadeau  🎁"><br>
+                <label for="gift8_2">Cadeau 8 :</label><input type="text" id="gift8_2" value="Cadeau  🎁"><br>
+                <label for="gift9_2">Cadeau 9 :</label><input type="text" id="gift9_2" value="Cadeau  🎁"><br>
+                <label for="gift10_2">Cadeau 10 :</label><input type="text" id="gift10_2" value="Cadeau  🎁"><br>
+                <label for="gift11_2">Cadeau 11 :</label><input type="text" id="gift11_2" value="Cadeau  🎁"><br>
+                <label for="gift12_2">Cadeau 12 :</label><input type="text" id="gift12_2" value="Cadeau  🎁"><br>
+            </div>
+        </div>
+        <div class="popup-section">
+            <div class="wheel-settings">
+                <h3>Roue 1</h3>
+                <label for="gift1_3">Cadeau 1 :</label><input type="text" id="gift1_3" value="Cadeau  🎁"><br>
+                <label for="gift2_3">Cadeau 2 :</label><input type="text" id="gift2_3" value="Cadeau  🎁"><br>
+                <label for="gift3_3">Cadeau 3 :</label><input type="text" id="gift3_3" value="Cadeau  🎁"><br>
+                <label for="gift4_3">Cadeau 4 :</label><input type="text" id="gift4_3" value="Cadeau  🎁"><br>
+                <label for="gift5_3">Cadeau 5 :</label><input type="text" id="gift5_3" value="Cadeau  🎁"><br>
+                <label for="gift6_3">Cadeau 6 :</label><input type="text" id="gift6_3" value="Cadeau  🎁"><br>
+                <label for="gift7_3">Cadeau 7 :</label><input type="text" id="gift7_3" value="Cadeau  🎁"><br>
+                <label for="gift8_3">Cadeau 8 :</label><input type="text" id="gift8_3" value="Cadeau  🎁"><br>
+                <label for="gift9_3">Cadeau 9 :</label><input type="text" id="gift9_3" value="Cadeau  🎁"><br>
+                <label for="gift10_3">Cadeau 10 :</label><input type="text" id="gift10_3" value="Cadeau  🎁"><br>
+                <label for="gift11_3">Cadeau 11 :</label><input type="text" id="gift11_3" value="Cadeau  🎁"><br>
+                <label for="gift12_3">Cadeau 12 :</label><input type="text" id="gift12_3" value="Cadeau  🎁"><br>
+            </div>
+        </div>
+        <button id="saveButton">Sauvegarder</button>
+    </div>
+</div>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        emailjs.init("hoz22gRCGAh20qkjt");
+        let lastMouseMoveTime = Date.now();
+        const wheels = [
+            { canvasId: "wheelCanvas1", spinButtonId: "spinButton1", resultId: "result1", gifts: Array(12).fill(null).map((_, i) => `Cadeau ${i+1}`) },
+            { canvasId: "wheelCanvas2", spinButtonId: "spinButton2", resultId: "result2", gifts: Array(12).fill(null).map((_, i) => `Cadeau ${i+1}`) },
+            { canvasId: "wheelCanvas3", spinButtonId: "spinButton3", resultId: "result3", gifts: Array(12).fill(null).map((_, i) => `Cadeau ${i+1}`) }
+        ];
+
+        // Fonction pour dessiner la roue
+        function drawWheel(canvasId, colors, gifts) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext("2d");
+            const segments = gifts.length;
+            const arc = (2 * Math.PI) / segments;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            gifts.forEach((gift, i) => {
+                const angle = i * arc;
+                ctx.beginPath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 150, angle, angle + arc);
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(angle + arc / 2);
+                ctx.fillStyle = "black";
+                ctx.textAlign = "center";
+                ctx.font = "14px Arial";
+                ctx.fillText(gift, 100, 10);
+                ctx.restore();
+            });
+
+            ctx.beginPath();
+            ctx.arc(150, 150, 30, 0, 2 * Math.PI);
+            ctx.fillStyle = "#ffffff";
+            ctx.fill();
+        }
+
+        // Fonction pour faire tourner la roue
+        function spinWheel(wheel) {
+            const canvas = document.getElementById(wheel.canvasId);
+            const ctx = canvas.getContext("2d");
+            const gifts = wheel.gifts;
+            let angle = 0;
+            const spinTime = Math.random() * 3000 + 2000;
+            const spinInterval = 20;
+
+            const interval = setInterval(() => {
+                angle += 20 * Math.PI / 180;
+                drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], gifts);
+                ctx.translate(150, 150);
+                ctx.rotate(angle);
+                ctx.translate(-150, -150);
+            }, spinInterval);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                const resultIndex = Math.floor(Math.random() * gifts.length);
+                document.getElementById(wheel.resultId).textContent = `Résultat: ${gifts[resultIndex]}`;
+                // Envoi de l'e-mail avec le score
+                sendEmail(gifts[resultIndex]);
+            }, spinTime);
+        }
+
+        // Événements pour les boutons
+        document.getElementById("customizeButton").addEventListener("click", () => {
+            document.getElementById("popup").style.display = "flex";
+        });
+
+        document.getElementById("accessButton").addEventListener("click", () => {
+            const password = document.getElementById("passwordInput").value;
+            if (password === "weareeffrance") {
+                document.getElementById("popup").style.display = "none";
+                document.getElementById("popupContent").style.display = "flex";
+            } else {
+                alert("Mot de passe incorrect !");
+            }
+        });
+
+        document.getElementById("saveButton").addEventListener("click", () => {
+            wheels.forEach((wheel, index) => {
+                wheel.gifts = Array.from({ length: 12 }, (_, i) => document.getElementById(`gift${i + 1}_${index + 1}`).value);
+                drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts);
+            });
+            document.getElementById("popupContent").style.display = "none";
+        });
+
+        wheels.forEach(wheel => {
+            drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], wheel.gifts);
+            document.getElementById(wheel.spinButtonId).addEventListener("click", () => spinWheel(wheel));
+        });
+    </script>
 </body>
 </html>
