@@ -295,13 +295,14 @@
             const spinTime = Math.random() * 3000 + 2000;
             const spinInterval = 20;
 
-            const interval = setInterval(() => {
-                angle += 20 * Math.PI / 180;
-                drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], gifts);
-                ctx.translate(150, 150);
-                ctx.rotate(angle);
-                ctx.translate(-150, -150);
-            }, spinInterval);
+           const interval = setInterval(() => {
+    angle += 20 * Math.PI / 180; // Incrémente l'angle, ce qui contrôle la vitesse de rotation
+    drawWheel(wheel.canvasId, ["#F0E68C", "#D1E8E2"], gifts);
+    ctx.translate(150, 150);
+    ctx.rotate(angle);
+    ctx.translate(-150, -150);
+}, spinInterval);
+
 
             setTimeout(() => {
                 clearInterval(interval);
